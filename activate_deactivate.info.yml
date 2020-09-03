@@ -1,0 +1,4 @@
+name: Activate / Deactivate Listing
+type: module
+description: A module for adding an activate/deactivate toggle function at the frontend of a specific content type.
+core: 8.x

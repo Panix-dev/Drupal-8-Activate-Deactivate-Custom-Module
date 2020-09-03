@@ -1,0 +1,5 @@
+ajax_form_submit.task_name:
+  route_name: activate_deactivate.submission_url
+  base_route: entity.node.canonical
+  title: 'Some Title'
+  weight: 1000

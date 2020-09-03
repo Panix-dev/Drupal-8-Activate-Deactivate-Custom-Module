@@ -1,0 +1,3 @@
+my_permission:
+  title: 'Allow user to activate/deactivate'
+  description: 'The permissions for the custom module to allow activate/deactivate a listing from the frontend'

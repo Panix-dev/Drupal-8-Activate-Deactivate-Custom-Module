@@ -1,0 +1,9 @@
+activate_deactivate.submission_url:
+  path: '/activate-deactivate'
+  defaults:
+    _controller: '\Drupal\activate_deactivate\Controller\ActivateDeactivateController::action'
+    _title: 'Our custom Activate/Deactivate functionality'
+  methods: [GET]
+  requirements:
+    _permission: 'my_permission'
+    _node_types: 'listing'

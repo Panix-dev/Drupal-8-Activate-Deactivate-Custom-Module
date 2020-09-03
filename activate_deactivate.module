@@ -1,0 +1,65 @@
+<?php
+
+
+/**
+ * Implements hook_preprocess_menu_local_task().
+ */
+function activate_deactivate_preprocess_menu_local_task(&$variables) {
+  /** @var \Drupal\Core\Url $url */
+  $url = $variables['link']['#url'];
+  if ($url instanceof \Drupal\Core\Url && $url->getRouteName() == 'activate_deactivate.submission_url') {
+    $variables['link']['#options']['attributes']['class'][] = 'trigger-class';
+  }
+}
+
+function activate_deactivate_preprocess_page(&$variables) {
+
+	$node = \Drupal::routeMatch()->getParameter('node');  
+	$user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+
+	if ($node instanceof \Drupal\node\NodeInterface) { // Check if it is a node
+		if($node->bundle() == 'listing' && $user->hasPermission('my_permission')) {
+			$variables['#attached']['library'][] = 'activate_deactivate/actdeact';
+		}
+	}
+    
+}
+
+function activate_deactivate_menu_local_tasks_alter(&$data, $route_name, \Drupal\Core\Cache\RefinableCacheableDependencyInterface &$cacheability) {
+
+	$url = Drupal\Core\Url::fromRoute('activate_deactivate.submission_url');
+
+	$node = \Drupal::routeMatch()->getParameter('node');  
+	$user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+
+	if ($node instanceof \Drupal\node\NodeInterface) { // Check if it is a node
+	  	$nid = $node->id(); // You also have the node object right here
+
+		if ($node->isPublished()) {
+			// $entity->setUnpublished();
+			$linkText = '<i class="far fa-dot-circle"></i> Deactivate';
+		}
+		else {
+			// $entity->setPublished();
+			$linkText = '<i class="fas fa-dot-circle"></i> Activate';
+		}
+
+		//check if this is a node of the types you want to handle
+		if($node->bundle() == 'listing' && $user->hasPermission('my_permission')) {
+			$data['tabs'][0]['activate_deactivate.submission_url'] = [
+			    '#theme' => 'menu_local_task',
+			    '#link' => [
+			    'title' => t($linkText),
+			    'url' => $url
+			    ],
+			    '#weight' => -1000
+			];
+
+			// The tab we're adding is dependent on a user's access to add content.
+			$cacheability
+			    ->addCacheTags([
+			    'user.permissions',
+			]);
+		}
+	}
+}
