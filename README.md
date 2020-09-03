@@ -16,7 +16,6 @@ A custom Drupal 8 module for activating and deactivating a node of content type 
 - [Links Tasks](#links-tasks)
 - [Controller](#controller)
 - [Contact Details](#contact-details)
-- [Inspiration](#inspiration)
 
 
 ## Routing
@@ -137,9 +136,3 @@ class ActivateDeactivateController {
 > :iphone: [Instagram](https://www.instagram.com/panos_agapiou/)
 
 > :iphone: [Facebook](https://www.facebook.com/panagiotis.agapiou)
-
-
-## Inspiration
-
-
-- **[Traversy Media](https://www.youtube.com/channel/UC29ju8bIPH5as8OGnQzwJyA)**
